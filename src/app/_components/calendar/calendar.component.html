@@ -1,1 +1,23 @@
-<p>calendar works!</p>
+<h2>My calendar</h2>
+<div class="col-md-6 offset-md-3">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Time</th>
+      <th scope="col">Type</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let event of events">
+      <td>
+        <a routerLink="/detail/{{event.id}}">{{event.title}}</a>
+      </td>
+      <td>{{event.time}}</td>
+      <td>{{event.type}}</td>
+      <td></td>
+    </tr>
+    </tbody>
+  </table>
+</div>

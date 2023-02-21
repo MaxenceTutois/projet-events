@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, of, tap} from "rxjs";
 
 import {Event} from "../_models/event";
+import {EventAddComponent} from "../_components/event-add/event-add.component";
 
 const EVENTS_API = 'http://localhost:3000/events';
 
@@ -10,6 +11,10 @@ const EVENTS_API = 'http://localhost:3000/events';
   providedIn: 'root'
 })
 export class EventsService {
+
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
 
   constructor(private http: HttpClient) {
   }
@@ -30,7 +35,7 @@ export class EventsService {
       );
   }
 
-  getEventsWithFilters(type: string, time: string) {
+  getEventsWithFilters(type: string, time: string): Observable<Event[]> {
     let url = EVENTS_API + '?';
     if (type) {
       url = url + 'type=' + type;
@@ -38,11 +43,17 @@ export class EventsService {
     if (time) {
       url = url + 'time=' + time;
     }
-    console.log(url);
     return this.http.get<Event[]>(url)
       .pipe(
-        tap(_ => console.log('fetched events with filters type=' + type + ', time=' + time)),
-        catchError(this.handleError<Event[]>('getEventsWithFilters', []))
+        tap(_ => console.log(`fetched events with filters`)),
+        catchError(this.handleError<Event[]>(`getEventsWithFilters`, []))
       );
+  }
+
+  addEvent(event: Event): Observable<Event> {
+    return this.http.post<Event>(EVENTS_API, event, this.httpOptions).pipe(
+      tap((newEvent: Event) => console.log(`added event with id=${newEvent.id}`)),
+      catchError(this.handleError<Event>(`addEvent`))
+    );
   }
 }

@@ -34,22 +34,6 @@ export class EventsService {
       );
   }
 
-  getEventsWithFilters(type: string, time: string): Observable<Event[]> {
-    let url = EVENTS_API + '?';
-    if (type) {
-      url = url + 'type=' + type;
-    }
-    if (time) {
-      url = url + 'time=' + time;
-    }
-    url = url + '&_sort=time,type&_order=asc,asc';
-    return this.http.get<Event[]>(url)
-      .pipe(
-        tap(_ => console.log(`fetched events with filters`)),
-        catchError(this.handleError<Event[]>(`getEventsWithFilters`, []))
-      );
-  }
-
   getEvent(id: number): Observable<Event> {
     const url = `${EVENTS_API}/${id}`
     return this.http.get<Event>(url).pipe(

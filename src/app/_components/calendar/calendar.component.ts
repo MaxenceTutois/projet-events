@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import { EventsService } from "../../_services/events.service";
-import { Event } from "../../_models/event";
+import {EventsService} from "../../_services/events.service";
+import {Event} from "../../_models/event";
 
 @Component({
   selector: 'app-calendar',
@@ -11,10 +11,14 @@ import { Event } from "../../_models/event";
 export class CalendarComponent implements OnInit {
 
   events: Event[] = [];
+  filteredEvents: Event[] = [];
   filterTypes: string[] = [];
   chosenType: string = 'All';
+  startTime: string = '00:00';
+  endTime: string = '23:59';
 
-  constructor(private eventsService: EventsService) { }
+  constructor(private eventsService: EventsService) {
+  }
 
   ngOnInit(): void {
     this.getEvents();
@@ -22,7 +26,11 @@ export class CalendarComponent implements OnInit {
 
   getEvents(): void {
     this.eventsService.getEvents()
-      .subscribe(events => {this.events = events; this.populateTypeFilter();});
+      .subscribe(events => {
+        this.events = events;
+        this.populateTypeFilter();
+        this.filteredEvents = events;
+      });
   }
 
   populateTypeFilter(): void {
@@ -37,19 +45,17 @@ export class CalendarComponent implements OnInit {
   }
 
   filter() {
-    if (this.chosenType) {
-      if (this.chosenType == 'All') {
-        this.getEvents();
-      }
-      else {
-        this.eventsService.getEventsWithFilters(this.chosenType, '')
-          .subscribe(events => this.events = events);
-      }
+    if (this.chosenType != 'All') {
+      this.filteredEvents = this.events.filter(e => e.type == this.chosenType && e.time >= this.startTime && e.time <= this.endTime);
+    }
+    else {
+      this.filteredEvents = this.events.filter(e => e.time >= this.startTime && e.time <= this.endTime);
     }
   }
 
   delete(id: number) {
     this.events = this.events.filter(e => e.id != id);
+    this.filter();
     this.eventsService.deleteEvent(id).subscribe();
   }
 }

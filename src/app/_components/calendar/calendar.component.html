@@ -1,5 +1,8 @@
 <h2>My calendar</h2>
-<div class="col-md-6 offset-md-3">
+<div class="col-md-3 offset-md-6 m-12">
+  <a class="btn btn-primary" routerLink="/events/add">New event</a>
+</div>
+<div class="col-md-6 offset-md-3 m4">
   <select class="form-control m4" [(ngModel)]="chosenType" (ngModelChange)="filter()">
     <optgroup label="Filter by type">
       <option value="all">All</option>

@@ -22,11 +22,10 @@ export class CalendarComponent implements OnInit {
 
   getEvents(): void {
     this.eventsService.getEvents()
-      .subscribe(events => this.events = events);
-    this.setTypeFilter();
+      .subscribe(events => {this.events = events; this.populateTypeFilter();});
   }
 
-  setTypeFilter(): void {
+  populateTypeFilter(): void {
     if (this.events) {
       let types = [];
       for (let i = 0; i < this.events.length; i++) {

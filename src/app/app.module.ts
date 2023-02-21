@@ -6,11 +6,15 @@ import {HttpClientModule} from "@angular/common/http";
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CalendarComponent } from './_components/calendar/calendar.component';
+import { EventDetailComponent } from './_components/event-detail/event-detail.component';
+import { EventAddComponent } from './_components/event-add/event-add.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CalendarComponent
+    CalendarComponent,
+    EventDetailComponent,
+    EventAddComponent
   ],
   imports: [
     BrowserModule,

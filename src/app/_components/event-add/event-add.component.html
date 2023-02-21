@@ -1,16 +1,21 @@
+<div class="col-md-6 offset-md-3 border-bottom border-info mb-4">
+  <h2 class="text-center">Event</h2>
+</div>
+<div class="col-md-3 offset-md-3 mb-4">
+  <button type="button" class="btn btn-outline-danger" (click)="goBack()">Go back</button>
+</div>
 <div class="col-md-6 offset-md-3">
-  <h2>New event</h2>
   <form (ngSubmit)="onSubmit()" #eventForm="ngForm">
     <div class="form-group mb-2">
-      <label for="event-title">Event title: </label>
+      <label class="form-label" for="event-title"><b>Title:</b></label>
       <input id="event-title" name="title" class="form-control" [(ngModel)]="model.title" placeholder="Title" required #title="ngModel">
       <div [hidden]="title.valid" class="alert alert-danger">
         Title is required
       </div>
     </div>
-    <div class="form-group mb-2">
-      <label for="event-type">Event type: </label>
-      <select id="event-type" name="type" class="form-control" [(ngModel)]="model.type" required #type="ngModel">
+    <div class="form-group mb-4">
+      <label class="form-label" for="event-type"><b>Type:</b></label>
+      <select id="event-type" name="type" class="form-select" [(ngModel)]="model.type" required #type="ngModel">
         <optgroup label="Select type">
           <option *ngFor="let type of types" value="{{type}}">{{type}}</option>
         </optgroup>
@@ -19,18 +24,15 @@
         Type is required
       </div>
     </div>
-    <div class="form-group mb-2">
-      <label for="event-time">Event time: </label>
+    <div class="form-group mb-4">
+      <label class="form-label" for="event-time"><b>Time:</b></label>
       <input id="event-time" class="form-control" name="time" [(ngModel)]="model.time" type="time" #time="ngModel" required>
       <div [hidden]="time.valid" class="alert alert-danger">
         Time is required
       </div>
     </div>
-    <div class="col-md-3 offset-md-6 form-group mb-2">
-      <input type="submit" class="btn btn-success" [disabled]="!eventForm.form.valid" value="Submit">
+    <div class="col-md-3 offset-md-5 form-group mb-4">
+      <input type="submit" class="btn btn-lg btn-success" [disabled]="!eventForm.form.valid" value="Submit">
     </div>
   </form>
-</div>
-<div class="col-md-3 offset-md-3">
-  <button type="button" class="btn btn-danger" (click)="goBack()">Go back</button>
 </div>

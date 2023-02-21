@@ -12,7 +12,7 @@ export class CalendarComponent implements OnInit {
 
   events: Event[] = [];
   filterTypes: string[] = [];
-  chosenType?: string;
+  chosenType: string = 'All';
 
   constructor(private eventsService: EventsService) { }
 
@@ -49,6 +49,7 @@ export class CalendarComponent implements OnInit {
   }
 
   delete(id: number) {
-    
+    this.events = this.events.filter(e => e.id != id);
+    this.eventsService.deleteEvent(id).subscribe();
   }
 }

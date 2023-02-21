@@ -3,30 +3,38 @@
   <a class="btn btn-primary" routerLink="/events/add">New event</a>
 </div>
 <div class="col-md-6 offset-md-3 form-group mb-4">
-  <label for="type-filter">Filter type:&nbsp;</label>
-  <select id=type-filter [(ngModel)]="chosenType" (ngModelChange)="filter()">
+  <div><h5>Filters</h5></div>
+  <label for="type-filter"><b>Type:</b></label>
+  <select class="m-2" id=type-filter [(ngModel)]="chosenType" (ngModelChange)="filter()">
     <optgroup label="Filter by type">
       <option *ngFor="let type of filterTypes" value="{{type}}">{{type}}</option>
     </optgroup>
   </select>
+  <label for="start-filter"><b>From:</b></label>
+  <input class="m-2" id="start-filter" type="time" [(ngModel)]="startTime" (ngModelChange)="filter()">
+
+  <label for="end-filter"><b>To:</b></label>
+  <input class="m-2" id="end-filter" type="time" [(ngModel)]="endTime" (ngModelChange)="filter()">
 </div>
 <div class="col-md-6 offset-md-3">
-  <table class="table table-striped table-bordered table-hover">
+  <table class="table table-striped table-hover">
     <thead>
     <tr>
       <th scope="col">Title</th>
       <th scope="col">Time</th>
       <th scope="col">Type</th>
       <th scope="col"></th>
+      <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let event of events">
-      <td>
-        <a routerLink="/events/{{event.id}}">{{event.title}}</a>
-      </td>
+    <tr *ngFor="let event of filteredEvents">
+      <td>{{event.title}}</td>
       <td>{{event.time}}</td>
       <td>{{event.type}}</td>
+      <td>
+        <a class="btn btn-primary" routerLink="/events/{{event.id}}">&nbsp;Edit&nbsp;</a>
+      </td>
       <td>
         <button class="btn btn-danger" (click)="delete(event.id)">Delete</button>
       </td>

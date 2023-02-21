@@ -11,6 +11,8 @@ import { Event } from "../../_models/event";
 export class CalendarComponent implements OnInit {
 
   events: Event[] = [];
+  filterTypes: string[] = [];
+  chosenType?: string;
 
   constructor(private eventsService: EventsService) { }
 
@@ -21,5 +23,28 @@ export class CalendarComponent implements OnInit {
   getEvents(): void {
     this.eventsService.getEvents()
       .subscribe(events => this.events = events);
+    this.setTypeFilter();
+  }
+
+  setTypeFilter(): void {
+    if (this.events) {
+      let types = [];
+      for (let i = 0; i < this.events.length; i++) {
+        types.push(this.events[i].type);
+      }
+      this.filterTypes = Array.from(new Set(types));
+    }
+  }
+
+  filter() {
+    if (this.chosenType) {
+      if (this.chosenType == 'all') {
+        this.getEvents();
+      }
+      else {
+        this.eventsService.getEventsWithFilters(this.chosenType, '')
+          .subscribe(events => this.events = events);
+      }
+    }
   }
 }

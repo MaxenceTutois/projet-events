@@ -2,10 +2,10 @@
 <div class="col-md-3 offset-md-6 m-12">
   <a class="btn btn-primary" routerLink="/events/add">New event</a>
 </div>
-<div class="col-md-6 offset-md-3 m4">
-  <select class="form-control m4" [(ngModel)]="chosenType" (ngModelChange)="filter()">
+<div class="col-md-6 offset-md-3 form-group">
+  <label for="type-filter">Filter type:&nbsp;</label>
+  <select id=type-filter [(ngModel)]="chosenType" (ngModelChange)="filter()">
     <optgroup label="Filter by type">
-      <option value="all">All</option>
       <option *ngFor="let type of filterTypes" value="{{type}}">{{type}}</option>
     </optgroup>
   </select>
@@ -27,7 +27,9 @@
       </td>
       <td>{{event.time}}</td>
       <td>{{event.type}}</td>
-      <td></td>
+      <td>
+        <button class="btn btn-danger" (click)="delete(event.id)">Delete</button>
+      </td>
     </tr>
     </tbody>
   </table>

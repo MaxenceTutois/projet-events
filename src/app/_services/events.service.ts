@@ -3,7 +3,6 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {catchError, Observable, of, tap} from "rxjs";
 
 import {Event} from "../_models/event";
-import {EventAddComponent} from "../_components/event-add/event-add.component";
 
 const EVENTS_API = 'http://localhost:3000/events';
 
@@ -28,7 +27,7 @@ export class EventsService {
   }
 
   getEvents(): Observable<Event[]> {
-    return this.http.get<Event[]>(EVENTS_API)
+    return this.http.get<Event[]>(EVENTS_API + '?_sort=time,type&_order=asc,asc')
       .pipe(
         tap(_ => console.log('fetched events')),
         catchError(this.handleError<Event[]>('getEvents', []))
@@ -43,6 +42,7 @@ export class EventsService {
     if (time) {
       url = url + 'time=' + time;
     }
+    url = url + '&_sort=time,type&_order=asc,asc';
     return this.http.get<Event[]>(url)
       .pipe(
         tap(_ => console.log(`fetched events with filters`)),

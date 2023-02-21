@@ -28,6 +28,7 @@ export class CalendarComponent implements OnInit {
   populateTypeFilter(): void {
     if (this.events) {
       let types = [];
+      types.push('All');
       for (let i = 0; i < this.events.length; i++) {
         types.push(this.events[i].type);
       }
@@ -37,7 +38,7 @@ export class CalendarComponent implements OnInit {
 
   filter() {
     if (this.chosenType) {
-      if (this.chosenType == 'all') {
+      if (this.chosenType == 'All') {
         this.getEvents();
       }
       else {
@@ -45,5 +46,9 @@ export class CalendarComponent implements OnInit {
           .subscribe(events => this.events = events);
       }
     }
+  }
+
+  delete(id: number) {
+    
   }
 }

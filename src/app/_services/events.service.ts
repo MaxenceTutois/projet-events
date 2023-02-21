@@ -56,4 +56,12 @@ export class EventsService {
       catchError(this.handleError<Event>(`addEvent`))
     );
   }
+
+  deleteEvent(id: number): Observable<Event> {
+    const url = `${EVENTS_API}/${id}`
+    return this.http.delete<Event>(url, this.httpOptions).pipe(
+      tap(_ => console.log(`deleted event id=${id}`)),
+      catchError(this.handleError<Event>(`deleteEvent`))
+    );
+  }
 }

@@ -53,12 +53,6 @@
       "title": "Coucher",
       "time": "23:00",
       "type": "Routine"
-    },
-    {
-      "id": 10,
-      "title": "Event renamed",
-      "time": "16:45",
-      "type": "Routine"
     }
   ]
 }

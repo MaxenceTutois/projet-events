@@ -6,7 +6,8 @@ import {EventAddComponent} from "./_components/event-add/event-add.component";
 const routes: Routes = [
   { path: '', redirectTo: '/events', pathMatch: 'full' },
   { path: 'events', component: CalendarComponent },
-  { path: 'events/add', component: EventAddComponent }
+  { path: 'events/add', component: EventAddComponent },
+  { path: 'events/:id', component: EventAddComponent }
 ];
 
 @NgModule({

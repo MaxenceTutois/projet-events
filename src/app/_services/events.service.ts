@@ -50,10 +50,26 @@ export class EventsService {
       );
   }
 
+  getEvent(id: number): Observable<Event> {
+    const url = `${EVENTS_API}/${id}`
+    return this.http.get<Event>(url).pipe(
+      tap(_ => console.log(`fetched event with id=${id}`)),
+      catchError(this.handleError<Event>(`getEvent id=${id}`))
+    );
+  }
+
   addEvent(event: Event): Observable<Event> {
     return this.http.post<Event>(EVENTS_API, event, this.httpOptions).pipe(
       tap((newEvent: Event) => console.log(`added event with id=${newEvent.id}`)),
       catchError(this.handleError<Event>(`addEvent`))
+    );
+  }
+
+  updateEvent(event: Event): Observable<Event> {
+    const url = `${EVENTS_API}/${event.id}`
+    return this.http.put<Event>(url, event, this.httpOptions).pipe(
+      tap(_ => console.log(`updated event with id=${event.id}`)),
+      catchError(this.handleError<Event>(`updateEvent`))
     );
   }
 
